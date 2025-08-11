@@ -46,4 +46,4 @@ jobs:
           message: |
             ✅ Playwright Automation finished.
             - **Status:** ${{ env.PLAYWRIGHT_FAILED == 'true' && '❌ Failed' || '✅ Passed' }}
-            - [View Playwright Report](https://github.com/your-username/your-automation-repo/actions/runs/${{ github.run_id }})
+            - [View Playwright Report](https://github.com/achmadky/bantuan-pw/actions/runs/${{ github.run_id }})
