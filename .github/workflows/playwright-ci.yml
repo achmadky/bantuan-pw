@@ -45,7 +45,7 @@ jobs:
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
           owner: achmadky
-          repo: bantuan-kita
+          repo: bantuan
           number: ${{ github.event.client_payload.pull_request_number }}
           message: |
             🧪 **Playwright Automation Results**
