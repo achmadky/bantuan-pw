@@ -10,12 +10,12 @@ test.describe('Offers API', () => {
 
     const body = await response.json();
 
-    // ✅ Validate top-level keys
+    // Validate top-level keys
     expect(body).toHaveProperty('data');
     expect(body).toHaveProperty('pagination');
     expect(Array.isArray(body.data)).toBeTruthy();
 
-    // ✅ Validate pagination object
+    // Validate pagination object
     expect(body.pagination).toMatchObject({
       hasNext: expect.any(Boolean),
       hasPrev: expect.any(Boolean),
@@ -25,7 +25,7 @@ test.describe('Offers API', () => {
       totalPages: expect.any(Number)
     });
 
-    // ✅ Validate first offer (if any)
+    // Validate first offer (if any)
     if (body.data.length > 0) {
       const offer = body.data[0];
       expect(offer).toEqual(

@@ -26,7 +26,6 @@ test('Submit Offer API', async ({}) => {
   expect(response.ok()).toBeTruthy();
 
   const body = await response.json();
-  console.log('API Response:', body);
 
   expect(body.success).toBe(true);
   expect(body.message).toContain('Penawaran bantuan berhasil dikirim');
