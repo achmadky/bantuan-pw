@@ -19,24 +19,25 @@ jobs:
           node-version: 18
 
       - name: Install dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright browsers
         run: npx playwright install --with-deps
 
-      - name: Run Playwright tests
+      - name: Run Playwright tests (HTML reporter)
         id: run-tests
         run: |
           set +e
-          npx playwright test
+          npx playwright test --reporter=html
           echo "EXIT_CODE=$?" >> $GITHUB_ENV
           set -e
 
       - name: Upload Playwright HTML report
         uses: actions/upload-artifact@v4
         with:
-          name: playwright-report
+          name: playwright-html-report
           path: playwright-report
+          retention-days: 7
 
       - name: Comment on PR in main Bantuan repo
         if: github.event.client_payload.pull_request_number != ''
@@ -49,4 +50,5 @@ jobs:
           message: |
             🧪 **Playwright Automation Results**
             - **Status:** ${{ env.EXIT_CODE != '0' && '❌ Failed' || '✅ Passed' }}
-            - [View Playwright Report](https://github.com/achmadky/bantuan-pw/actions/runs/${{ github.run_id }})
+            - **HTML Report:** [Download Report](https://github.com/achmadky/bantuan-pw/actions/runs/${{ github.run_id }})
+
