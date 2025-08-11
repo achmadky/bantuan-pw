@@ -1,6 +1,6 @@
 import { test, expect, request } from '@playwright/test';
 
-test('Submit Offer API', async ({}) => {
+test('Success Submit Offer API', async ({}) => {
   const apiContext = await request.newContext({
     baseURL: 'https://bantuan-kita.vercel.app',
     extraHTTPHeaders: {

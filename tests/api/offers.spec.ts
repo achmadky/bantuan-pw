@@ -1,7 +1,7 @@
 import { test, expect } from '@playwright/test';
 
 test.describe('Offers API', () => {
-  test('should return correct offer data structure', async ({ request }) => {
+  test('Success Get Offers', async ({ request }) => {
     const page = 1;
     const limit = 5;
 
