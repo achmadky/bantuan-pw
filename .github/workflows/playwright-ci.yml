@@ -2,15 +2,15 @@ name: Playwright Automation CI
 
 on:
   repository_dispatch:
-    types: [trigger-playwright]  # from main repo
-  workflow_dispatch:             # manual trigger if needed
+    types: [trigger-playwright] # Triggered from main repo
+  workflow_dispatch:            # Manual trigger
 
 jobs:
   test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repo
+      - name: Checkout automation repo
         uses: actions/checkout@v4
 
       - name: Setup Node.js
@@ -27,9 +27,12 @@ jobs:
       - name: Run Playwright tests
         id: run-tests
         run: |
-          npx playwright test || echo "PLAYWRIGHT_FAILED=true" >> $GITHUB_ENV
+          set +e
+          npx playwright test
+          echo "EXIT_CODE=$?" >> $GITHUB_ENV
+          set -e
 
-      - name: Upload Playwright report
+      - name: Upload Playwright HTML report
         uses: actions/upload-artifact@v4
         with:
           name: playwright-report
@@ -40,10 +43,10 @@ jobs:
         uses: marocchino/sticky-pull-request-comment@v2
         with:
           token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
-          owner: your-username
+          owner: achmadky
           repo: bantuan-kita
           number: ${{ github.event.client_payload.pull_request_number }}
           message: |
-            ✅ Playwright Automation finished.
-            - **Status:** ${{ env.PLAYWRIGHT_FAILED == 'true' && '❌ Failed' || '✅ Passed' }}
+            🧪 **Playwright Automation Results**
+            - **Status:** ${{ env.EXIT_CODE != '0' && '❌ Failed' || '✅ Passed' }}
             - [View Playwright Report](https://github.com/achmadky/bantuan-pw/actions/runs/${{ github.run_id }})
